@@ -7,7 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "instalar": "npm ci --prefix server && npm ci --prefix client",
+    "instalar": "npm ci --prefix server --omit=dev && npm ci --prefix client --include=dev",
     "build": "npm run instalar && npm run build --prefix client",
     "start": "npm start --prefix server",
     "dev:api": "npm run dev --prefix server",
