@@ -1,0 +1,21 @@
+# Base de datos local para desarrollo:  docker compose up -d
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: rumbo
+      POSTGRES_PASSWORD: rumbo
+      POSTGRES_DB: rumbo_seguro
+    ports:
+      - "5432:5432"
+    volumes:
+      - datos_pg:/var/lib/postgresql/data
+      - ./server/docker/crear-db-pruebas.sql:/docker-entrypoint-initdb.d/01-pruebas.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rumbo -d rumbo_seguro"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  datos_pg:
